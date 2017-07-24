@@ -8,13 +8,6 @@ const emelent = <h1>Hello Word!!!</h1>;
 ReactDOM.render(<App/>, document.getElementById('root'));
 ReactDOM.render(emelent, document.getElementById('root2'));
 
-function tick() {
-    const emel = (<div><h2>It is {new Date().toLocaleTimeString()}</h2></div>);
-    ReactDOM.render(emel, document.getElementById("tick"));
-}
-
-setInterval(tick, 1000);
-
 function Welcome(props) {
     return (<h2>欢迎 {props.name}</h2>);
 }
@@ -83,4 +76,59 @@ ReactDOM.render(
         text={comment.text}
     />, document.getElementById("comment")
 );
+
+//1.
+// function tick() {
+//     const emel = (<div><h2>It is {new Date().toLocaleTimeString()}</h2></div>);
+//     ReactDOM.render(emel, document.getElementById("tick"));
+// }
+
+//2.
+// function Clock(props) {
+//     return(
+//         <div>
+//             <h2>It is {props.date.toLocaleTimeString()}</h2>
+//         </div>
+//     );
+// }
+// function tick() {
+//     ReactDOM.render(<Clock date={new Date()}/>,document.getElementById("tick"));
+// }
+
+class Clock extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {date:new Date()};
+    }
+    componentDidMount(){
+        this.timerID = setInterval(
+            ()=>this.tick()
+            ,1000);
+    }
+    componentWillUnmount(){
+        clearInterval(this.timerID)
+    }
+    tick(){
+        this.setState({
+            date:new Date()
+        });
+    }
+    render(){
+        return(
+            <div>
+                <h1>hello word!</h1>
+                <h2>It is {this.state.date.toLocaleTimeString()}</h2>
+            </div>
+        );
+    }
+}
+// function tick() {
+//     ReactDOM.render(<Clock date={new Date()}/>,document.getElementById("tick"));
+// }
+
+// setInterval(tick, 1000);
+
+ReactDOM.render(<Clock />,document.getElementById("tick"));
+
+
 registerServiceWorker();
