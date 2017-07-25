@@ -12,10 +12,10 @@ function Welcome(props) {
     return (<h2>欢迎 {props.name}</h2>);
 }
 const wel_el = <Welcome name="Sara"/>
-ReactDOM.render(wel_el,document.getElementById("welcome"));
+ReactDOM.render(wel_el, document.getElementById("welcome"));
 
 function NewApp() {
-    return(<div>
+    return (<div>
         <Welcome name="老毛"/>
         <Welcome name="朱明宇"/>
         <Welcome name="李良伟"/>
@@ -23,7 +23,7 @@ function NewApp() {
         <Welcome name="陆轶秋"/>
     </div>);
 }
-ReactDOM.render(<NewApp/>,document.getElementById("newapp"))
+ReactDOM.render(<NewApp/>, document.getElementById("newapp"))
 ReactDOM.render(<App />, document.getElementById('root'));
 
 function formatDate(date) {
@@ -33,13 +33,13 @@ function Comment(props) {
     return (
         <div className="Comment">
             {/*<div className="UserInfo">
-                <img className="avatar"
-                src={props.author.avatarUrl}
-                alt={props.author.name}
-                />
-                <Avatar user={props.author}/>
-                <div className="AuthorName">{props.author.name}</div>
-            </div>*/}
+             <img className="avatar"
+             src={props.author.avatarUrl}
+             alt={props.author.name}
+             />
+             <Avatar user={props.author}/>
+             <div className="AuthorName">{props.author.name}</div>
+             </div>*/}
             <Avatar user={props.author}/>
             <div className="Comment-text">
                 {props.text}
@@ -95,26 +95,30 @@ ReactDOM.render(
 //     ReactDOM.render(<Clock date={new Date()}/>,document.getElementById("tick"));
 // }
 
-class Clock extends React.Component{
-    constructor(props){
+class Clock extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = {date:new Date()};
+        this.state = {date: new Date()};
     }
-    componentDidMount(){
+
+    componentDidMount() {
         this.timerID = setInterval(
-            ()=>this.tick()
-            ,1000);
+            () => this.tick()
+            , 1000);
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
         clearInterval(this.timerID)
     }
-    tick(){
+
+    tick() {
         this.setState({
-            date:new Date()
+            date: new Date()
         });
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
                 <h1>hello word!</h1>
                 <h2>It is {this.state.date.toLocaleTimeString()}</h2>
@@ -128,7 +132,137 @@ class Clock extends React.Component{
 
 // setInterval(tick, 1000);
 
-ReactDOM.render(<Clock />,document.getElementById("tick"));
+ReactDOM.render(<Clock />, document.getElementById("tick"));
 
+class Toggle extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {isToggleOn: true};
+        this.handleClick = this.handleClick.bind(this);
+    }
 
+    handleClick() {
+        this.setState(prevState => ({isToggleOn: !prevState.isToggleOn}));
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+                {this.state.isToggleOn ? 'ON' : 'OFF'}
+            </button>
+        );
+    }
+}
+ReactDOM.render(<Toggle />, document.getElementById("toggle"));
+
+function UserGreeting(props) {
+    return (<h2>Welcome Back!</h2>)
+}
+function GuestGreeting(props) {
+    return (<h2>Please Sign up.</h2>);
+}
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return (<UserGreeting />)
+    } else {
+        return (<GuestGreeting/>);
+    }
+}
+
+ReactDOM.render(<Greeting isLoggedIn={true}/>,document.getElementById("greeting"))
+
+function LoginButton(props) {
+    return(
+        <button onClick={props.onClick}>
+            Login
+        </button>
+    );
+}
+function LogoutButton(props) {
+    return(
+        <button onClick={props.onClick}>
+            Logout
+        </button>
+    )
+}
+class LoginControl extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = {isLoggedIn:false}
+    }
+    handleLoginClick(){
+        this.setState({isLoggedIn:true});
+    }
+    handleLogoutClick(){
+        this.setState({isLoggedIn:false})
+    }
+    render(){
+        const isLoggedIn = this.state.isLoggedIn;
+        let button = null;
+        if(isLoggedIn){
+            button = (<LogoutButton onClick={this.handleLogoutClick}/>)
+        }else{
+            button=(<LoginButton onClick={this.handleLoginClick}/>)
+        }
+        return(
+            <div>
+                <Greeting isLoggedIn={isLoggedIn}/>
+                {button}
+            </div>
+        );
+
+    }
+}
+ReactDOM.render(<LoginControl/>,document.getElementById("logincontrol"));
+
+function Mailbox(props) {
+    const unreadMessages = props.unreadMessages;
+    return(
+        <div>
+            <h2>Hello!</h2>
+            {unreadMessages.length>0&&
+            <h3>You have {unreadMessages.length} unread Messages</h3>
+            }
+        </div>
+    )
+}
+const messages =["一个皮球","一个皮球","一个皮球"];
+ReactDOM.render(<Mailbox unreadMessages={messages}/>,document.getElementById("mailbox"));
+
+function WarningBanner(props) {
+    if(!props.warn){
+        return null;
+    }
+    return (
+        <div className="warning">
+            This is Warning!
+        </div>
+    );
+}
+class PageWarning extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleToggleClick = this.handleToggleClick.bind(this);
+        this.state = {showWarning:true}
+    }
+    handleToggleClick(){
+        this.setState(prevState=>({showWarning:!prevState.showWarning}));
+    }
+    render(){
+        return(
+            <div>
+                <WarningBanner warn={this.state.showWarning}/>
+                <button onClick={this.handleToggleClick}>
+                    {this.state.showWarning?"Warn Hide":"Warn Show"}
+                </button>
+            </div>
+        );
+    }
+}
+ReactDOM.render(<PageWarning/>,document.getElementById("pagewarning"));
 registerServiceWorker();
+
+
