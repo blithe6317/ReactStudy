@@ -170,44 +170,47 @@ function Greeting(props) {
     }
 }
 
-ReactDOM.render(<Greeting isLoggedIn={true}/>,document.getElementById("greeting"))
+ReactDOM.render(<Greeting isLoggedIn={true}/>, document.getElementById("greeting"))
 
 function LoginButton(props) {
-    return(
+    return (
         <button onClick={props.onClick}>
             Login
         </button>
     );
 }
 function LogoutButton(props) {
-    return(
+    return (
         <button onClick={props.onClick}>
             Logout
         </button>
     )
 }
-class LoginControl extends React.Component{
-    constructor(props){
+class LoginControl extends React.Component {
+    constructor(props) {
         super(props);
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
-        this.state = {isLoggedIn:false}
+        this.state = {isLoggedIn: false}
     }
-    handleLoginClick(){
-        this.setState({isLoggedIn:true});
+
+    handleLoginClick() {
+        this.setState({isLoggedIn: true});
     }
-    handleLogoutClick(){
-        this.setState({isLoggedIn:false})
+
+    handleLogoutClick() {
+        this.setState({isLoggedIn: false})
     }
-    render(){
+
+    render() {
         const isLoggedIn = this.state.isLoggedIn;
         let button = null;
-        if(isLoggedIn){
+        if (isLoggedIn) {
             button = (<LogoutButton onClick={this.handleLogoutClick}/>)
-        }else{
-            button=(<LoginButton onClick={this.handleLoginClick}/>)
+        } else {
+            button = (<LoginButton onClick={this.handleLoginClick}/>)
         }
-        return(
+        return (
             <div>
                 <Greeting isLoggedIn={isLoggedIn}/>
                 {button}
@@ -216,24 +219,24 @@ class LoginControl extends React.Component{
 
     }
 }
-ReactDOM.render(<LoginControl/>,document.getElementById("logincontrol"));
+ReactDOM.render(<LoginControl/>, document.getElementById("logincontrol"));
 
 function Mailbox(props) {
     const unreadMessages = props.unreadMessages;
-    return(
+    return (
         <div>
             <h2>Hello!</h2>
-            {unreadMessages.length>0&&
+            {unreadMessages.length > 0 &&
             <h3>You have {unreadMessages.length} unread Messages</h3>
             }
         </div>
     )
 }
-const messages =["一个皮球","一个皮球","一个皮球"];
-ReactDOM.render(<Mailbox unreadMessages={messages}/>,document.getElementById("mailbox"));
+const messages = ["一个皮球", "一个皮球", "一个皮球"];
+ReactDOM.render(<Mailbox unreadMessages={messages}/>, document.getElementById("mailbox"));
 
 function WarningBanner(props) {
-    if(!props.warn){
+    if (!props.warn) {
         return null;
     }
     return (
@@ -242,27 +245,92 @@ function WarningBanner(props) {
         </div>
     );
 }
-class PageWarning extends React.Component{
-    constructor(props){
+class PageWarning extends React.Component {
+    constructor(props) {
         super(props);
         this.handleToggleClick = this.handleToggleClick.bind(this);
-        this.state = {showWarning:true}
+        this.state = {showWarning: true}
     }
-    handleToggleClick(){
-        this.setState(prevState=>({showWarning:!prevState.showWarning}));
+
+    handleToggleClick() {
+        this.setState(prevState => ({showWarning: !prevState.showWarning}));
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
                 <WarningBanner warn={this.state.showWarning}/>
                 <button onClick={this.handleToggleClick}>
-                    {this.state.showWarning?"Warn Hide":"Warn Show"}
+                    {this.state.showWarning ? "Warn Hide" : "Warn Show"}
                 </button>
             </div>
         );
     }
 }
-ReactDOM.render(<PageWarning/>,document.getElementById("pagewarning"));
+ReactDOM.render(<PageWarning/>, document.getElementById("pagewarning"));
+
+const numbers = [1, 2, 3, 4, 5];
+const double_n = numbers.map((number) => number * 2);
+console.log("double_n :", double_n);
+const ListItem = numbers.map((number) =>
+    <li>{number}</li>);
+ReactDOM.render(<ul>{ListItem}</ul>, document.getElementById("listitem"));
+
+
+function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =>
+
+        <li key={number.toString()}>
+            {number}
+        </li>
+    );
+    console.log("1 ", numbers)
+    return (<ul>{listItems}</ul>);
+}
+const numbers1 = [1, 2, 3, 4, 5];
+ReactDOM.render(<NumberList numbers={numbers1}/>, document.getElementById("numberlist"));
+
+function ListItem2(props) {
+    return <li>{props.value}</li>
+}
+function NumberList2(props) {
+    const numbers = props.numbers;
+    const listItem = numbers.map((number) =>
+        <listItem key={number.toString()} value={number}></listItem>
+    );
+    return (<ul>{ListItem2}</ul>);
+}
+const numbers2 = [1, 2, 3, 4, 5];
+ReactDOM.render(<NumberList2 numbers={numbers2}/>, document.getElementById("numberlist2"));
+
+function Blog(props) {
+    const sidebar = (
+        <ul>
+            {props.posts.map((post) =>
+                <li key={post.id}>{post.title}</li>)}
+        </ul>
+    );
+    const content = props.posts.map((post) =>
+        <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+        </div>
+    );
+    return(<div>
+        {sidebar}
+        <hr/>
+        {content}
+    </div>);
+}
+const posts=[
+    {id:1,title:"第一次",content:"第一次是什么几把"},
+    {id:2,title:"哟哟哟",content:"不得了了"}
+]
+
+ReactDOM.render(<Blog posts={posts}/>,document.getElementById("blog"));
+
+
 registerServiceWorker();
 
 
