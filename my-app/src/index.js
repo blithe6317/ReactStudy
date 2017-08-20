@@ -518,13 +518,13 @@ class Calculator2 extends React.Component {
 ReactDOM.render(<Calculator2/>, document.getElementById("calculator2"));
 
 function toCelsius(val) {
-    console.log("toCelsius :",val);
-    console.log("toCelsius out:",(val - 32) * 5 / 9);
+    console.log("toCelsius :", val);
+    console.log("toCelsius out:", (val - 32) * 5 / 9);
     return (val - 32) * 5 / 9;
 }
 function toFahrenheit(val) {
-    console.log("toFahrenheit :",val);
-    console.log("toFahrenheit out:",(val / 9 * 5) + 32);
+    console.log("toFahrenheit :", val);
+    console.log("toFahrenheit out:", (val / 9 * 5) + 32);
     return val / 9 * 5 + 32;
 }
 function tryConvert(temperature, convert) {
@@ -536,63 +536,160 @@ function tryConvert(temperature, convert) {
         rounded = Math.round(output * 1000) / 1000;
     return rounded.toString();
 }
-class TemperatureInput2 extends React.Component{
-    constructor(props){
+class TemperatureInput2 extends React.Component {
+    constructor(props) {
         super(props);
         this.handelChange = this.handelChange.bind(this);
     }
-    handelChange(e){
+
+    handelChange(e) {
         this.props.onTemperatureChange(e.target.value);
     }
-    render(){
+
+    render() {
         const temperature = this.props.temperature;
         const scale = this.props.scale;
-        return(
+        return (
             <fieldset>
                 <legend>这次输入温度类型是：{scaleNames[scale]}</legend>
                 <input
-                value={temperature}
-                onChange={this.handelChange}
+                    value={temperature}
+                    onChange={this.handelChange}
                 />
             </fieldset>
         )
     }
 }
-class Calculator3 extends React.Component{
-    constructor(props){
+class Calculator3 extends React.Component {
+    constructor(props) {
         super(props);
         this.handelCelsiusChange = this.handelCelsiusChange.bind(this);
         this.handelFahrenheitChange = this.handelFahrenheitChange.bind(this);
-        this.state = {temperature:'',scale:'c'};
+        this.state = {temperature: '', scale: 'c'};
     }
-    handelCelsiusChange(temperature){
-        this.setState({scale:'c',temperature});
+
+    handelCelsiusChange(temperature) {
+        this.setState({scale: 'c', temperature});
     }
-    handelFahrenheitChange(temperature){
-        this.setState({scale:'f',temperature});
+
+    handelFahrenheitChange(temperature) {
+        this.setState({scale: 'f', temperature});
     }
-    render(){
+
+    render() {
         const scale = this.state.scale;
         const temperature = this.state.temperature;
-        const celsius = scale==='f'?tryConvert(temperature,toCelsius):temperature;
-        const fahrenheit = scale==='c'?tryConvert(temperature,toFahrenheit):temperature;
-        return(
+        const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+        const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+        return (
             <div>
                 <TemperatureInput2 scale="c"
-                temperature={celsius}
-                onTemperatureChange={this.handelCelsiusChange}
+                                   temperature={celsius}
+                                   onTemperatureChange={this.handelCelsiusChange}
                 />
                 <TemperatureInput2
-                scale="f"
-                temperature={fahrenheit}
-                onTemperatureChange={this.handelFahrenheitChange}
+                    scale="f"
+                    temperature={fahrenheit}
+                    onTemperatureChange={this.handelFahrenheitChange}
                 />
                 <BoilingVerdict celsius={parseFloat(celsius)}/>
             </div>
         );
     }
 }
-ReactDOM.render(<Calculator3/>,document.getElementById("calculator3"))
+ReactDOM.render(<Calculator3/>, document.getElementById("calculator3"))
+
+function FancyBorder(props) {
+    return (
+        <div className={'FancyBorder FancyBorder-' + props.color}>
+            {props.children}
+        </div>
+
+    );
+}
+function Dialog(props) {
+    return (
+        <FancyBorder color="blue">
+            <h1 className="Dialog-title">{props.title}</h1>
+            <p className="Dialog-message">
+                {props.message}
+            </p>
+            {props.children}
+        </FancyBorder>
+    );
+}
+function WelcomeDialog() {
+    return (
+        <Dialog title="欢迎光临本网站" message="未满8周岁的请自觉离开"/>
+    );
+}
+ReactDOM.render(<WelcomeDialog/>, document.getElementById("welcome-dialog"));
+
+function Contacts() {
+    return (
+        <div className="Contacts">
+            这是一个秘密通道
+        </div>
+    );
+}
+function Chat() {
+    return (
+        <div className="Chat">
+            真实的时间
+        </div>
+    );
+}
+function SplitPane(props) {
+    return (
+        <div className="SplitPane">
+            <div className="SplitPane-left">
+                {props.left}
+            </div>
+            <div className="SplitPane-right">
+                {props.right}
+            </div>
+        </div>
+    );
+}
+function AppStare() {
+    return (
+        <SplitPane
+            left={<Contacts/>}
+            right={<Chat/>}
+        />
+    );
+}
+ReactDOM.render(
+    <AppStare/>
+    , document.getElementById("app-stare"));
+class SignUpDialog extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handelChange = this.handelChange.bind(this);
+        this.handelSignUp = this.handelSignUp.bind(this);
+        this.state = {login: ''};
+    }
+
+    render() {
+        return (
+            <Dialog title="正规按摩院" message="1.刮痧88，2.按摩99，3.全套800.">
+                <input value={this.state.login} onChange={this.handelChange}/>
+                <button onClick={this.handelSignUp}>预定</button>
+            </Dialog>
+        );
+    };
+    handelChange(e){
+        this.setState({login:e.target.value});
+    }
+    handelSignUp(){
+        const message = this.state;
+        alert("预定成功，"+message.login+"即将为您服务")
+    }
+}
+
+ReactDOM.render(
+    <SignUpDialog/>
+    , document.getElementById("slignup-dialog"));
 registerServiceWorker();
 
 

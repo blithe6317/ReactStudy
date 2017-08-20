@@ -11,3 +11,39 @@ body {
   height: 150px;
   border-radius: 50%;
 }
+.FancyBorder{
+  padding: 40px;
+  border:5px solid #eeeeee;
+}
+.FancyBorder.FancyBorder-blue{
+  border:5px solid blue;
+}
+.Dialog-title{
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+.Dialog-message{
+  font-size: 16px;
+
+}
+.SplitPane{
+  width: 100%;
+  height: 200px;
+}
+.SplitPane .SplitPane-left{
+  float: left;
+  width: 30%;
+}
+.SplitPane .SplitPane-right{
+  float: left;
+  width: 70%;
+}
+.Contacts{
+  width: 100%;
+  background: #aaa;
+}
+.Chat{
+  width: 100%;
+  background: #ff00ff;
+}
