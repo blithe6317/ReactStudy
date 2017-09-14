@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 全局样式 */
+html {
+    -webkit-text-size-adjust: none
+}
+
+html {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box; /* Firefox */
+    -webkit-box-sizing: border-box; /* Safari */
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    -moz-box-sizing: inherit; /* Firefox */
+    -webkit-box-sizing: inherit; /* Safari */
+}
+
+* {
+    border: 0px;
+    margin: 0px;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+button, input, textarea {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+    padding: 0px;
+}
+
+ol li {
+    list-style: decimal;
+}
+
+dl, dt, dd, form {
+    list-style: none;
+    vertical-align: middle;
+}
+
+body {
+    color: #333;
+    font-size: 13px;
+    font-family: "微软雅黑", "黑体", "Arial Normal", "Arial";
+}
+
+img {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    float: left;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
