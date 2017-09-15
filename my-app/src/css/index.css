@@ -72,4 +72,7 @@ a {
     background-repeat: no-repeat;
     overflow: hidden;
 }
+.icon.icon-logo{
+    background-image: url("../img/facebook.png");
+}
 
